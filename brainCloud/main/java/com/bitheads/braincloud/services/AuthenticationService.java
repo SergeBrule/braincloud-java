@@ -7,9 +7,6 @@ import com.bitheads.braincloud.client.ServiceName;
 import com.bitheads.braincloud.client.ServiceOperation;
 import com.bitheads.braincloud.comms.ServerCall;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -45,11 +42,13 @@ public class AuthenticationService {
         serverAuthCode,
         googleUserId,
         googleUserAccountEmail,
-        IdToken
+        IdToken,
+        compressResponses
     }
 
     private String _anonymousId;
     private String _profileId;
+    private Boolean _compressResponses = false;
 
     public String getAnonymousId() {
         return _anonymousId;
@@ -65,6 +64,14 @@ public class AuthenticationService {
 
     public void setProfileId(String profileId) {
         _profileId = profileId;
+    }
+
+    public void setCompressResponses(Boolean compressResponses) {
+        _compressResponses = compressResponses;
+    }
+
+    public Boolean getCompressResponses() {
+        return _compressResponses;
     }
 
     /**
@@ -559,6 +566,7 @@ public class AuthenticationService {
             message.put(Parameter.authenticationToken.name(), authenticationToken);
             message.put(Parameter.authenticationType.name(), authenticationType.toString());
             message.put(Parameter.forceCreate.name(), forceCreate);
+            message.put(Parameter.compressResponses.name(), _compressResponses);
 
             message.put(Parameter.profileId.name(), _profileId);
             message.put(Parameter.anonymousId.name(), _anonymousId);
